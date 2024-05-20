@@ -1,4 +1,4 @@
-const { User } = require("../db");
+const { User, Account } = require("../db");
 const { JWT_SECRET } = require("../config");
 const authMiddleware = require("../middleware");
 
@@ -40,6 +40,11 @@ router.post("/signup", async (req, res) => {
     });
 
     const userId = newUser._id;
+
+    await Account.create({
+      userId,
+      balance: 1 + Math.random() * 10000,
+    });
 
     const token = jwt.sign(
       {
@@ -157,4 +162,5 @@ router.get("/bulk", async (req, res) => {
     });
   }
 });
+
 module.exports = router;

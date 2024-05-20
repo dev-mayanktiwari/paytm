@@ -44,6 +44,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// User Schema
 userSchema.pre("save", async function (next) {
   const user = this;
   if (!user.isModified("password")) {
@@ -61,7 +62,7 @@ userSchema.pre("save", async function (next) {
 
 async function hashPassword(next) {
   const update = this.getUpdate();
-  if(update.password) {
+  if (update.password) {
     try {
       const saltround = 11;
       const salt = await bcrypt.genSalt(saltround);
@@ -77,8 +78,23 @@ async function hashPassword(next) {
 userSchema.pre("findOneAndUpdate", hashPassword);
 userSchema.pre("updateOne", hashPassword);
 
+// Bank Schema
+const accountSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  balance: {
+    type: Number,
+    required: true,
+  },
+});
+
 const User = mongoose.model("User", userSchema);
+const Account = mongoose.model("Account", accountSchema);
 
 module.exports = {
   User,
+  Account
 };
