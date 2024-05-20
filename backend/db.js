@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", async function (next) {
   const user = this;
   if (!user.isModified("password")) {
-    next();
+    return next();
   }
   try {
     const saltround = await bcrypt.genSalt(11);
@@ -58,6 +58,24 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
+
+async function hashPassword(next) {
+  const update = this.getUpdate();
+  if(update.password) {
+    try {
+      const saltround = 11;
+      const salt = await bcrypt.genSalt(saltround);
+      update.password = await bcrypt.hash(update.password, salt);
+      this.setUpdate(update);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+}
+
+userSchema.pre("findOneAndUpdate", hashPassword);
+userSchema.pre("updateOne", hashPassword);
 
 const User = mongoose.model("User", userSchema);
 
