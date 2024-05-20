@@ -1,13 +1,18 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-main().catch((err) => console.log(err));
-
-async function main() {
-  mongoose.connect(
-    "mongodb+srv://mayanktiwari:Maya1234@cluster0.r54hiez.mongodb.net/paytm"
-  );
-}
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Database connected successfully");
+  })
+  .catch((err) => {
+    console.error("Database connection error:", err);
+  });
 
 const userSchema = new mongoose.Schema({
   username: {

@@ -67,14 +67,14 @@ router.post("/signin", async (req, res) => {
   try {
     const user = await User.findOne({ username: username });
     if (!user) {
-      res.status(401).json({
+      return res.status(401).json({
         error: "User not exist.",
       });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      res.status(401).json({
+      return res.status(401).json({
         error: "Invalid username or password.",
       });
     }
@@ -88,7 +88,7 @@ router.post("/signin", async (req, res) => {
       token: token,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: "Internal server error.",
     });
   }
@@ -104,18 +104,18 @@ router.put("/", authMiddleware, async (req, res) => {
   try {
     const result = updatedUsedData.safeParse(updatedUsedData);
     if (!result.success) {
-      res.status(400).json({
+      return res.status(400).json({
         error: "Invalid input.",
       });
     }
 
     await User.updateOne({ _id: req.userId }, req.body);
-    res.json({
+    return res.json({
       mssg: "Details updated successfully.",
     });
   } catch (error) {
     console.error("Error updating user:", error);
-    res.status(500).json({
+    return res.status(500).json({
       mssg: "Internal server error",
     });
   }
