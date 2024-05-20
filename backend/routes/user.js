@@ -1,11 +1,11 @@
 const { User } = require("../db");
 const { JWT_SECRET } = require("../config");
+const authMiddleware = require("../middleware");
 
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const express = require("express");
-const authMiddleware = require("../middleware");
 
 const router = express.Router();
 
@@ -121,4 +121,40 @@ router.put("/", authMiddleware, async (req, res) => {
   }
 });
 
+router.get("/bulk", async (req, res) => {
+  const filter = req.query.filter || "";
+  console.log(filter);
+  try {
+    const users = await User.find({
+      $or: [
+        {
+          firstName: {
+            $regex: filter,
+            $options: "i",
+          },
+        },
+        {
+          lastName: {
+            $regex: filter,
+            $options: "i",
+          },
+        },
+      ],
+    });
+    console.log(users);
+    return res.json({
+      users: users.map((user) => ({
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        _id: user._id,
+      })),
+    });
+  } catch (error) {
+    console.log("Error searching users:", error);
+    return res.status(500).json({
+      error: "Internal server error.",
+    });
+  }
+});
 module.exports = router;
