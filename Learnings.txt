@@ -1,0 +1,8 @@
+Learned about bcrypt.
+-- how passwords are encrypted using save and updateOne.
+
+Learned about project management.
+-- how files are kept
+-- how directories are made in production
+
+Learned about local storage.

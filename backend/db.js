@@ -3,10 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 mongoose
-  .connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.DATABASE_URL)
   .then(() => {
     console.log("Database connected successfully");
   })

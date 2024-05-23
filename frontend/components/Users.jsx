@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { Button } from "./Button"
+import  Button  from "./Button"
 
-export const Users = () => {
+const Users = () => {
     // Replace with backend call
     const [users, setUsers] = useState([{
         firstName: "Harkirat",
@@ -42,3 +42,5 @@ function User({user}) {
         </div>
     </div>
 }
+
+export default Users;
