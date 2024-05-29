@@ -10,16 +10,26 @@ router.get("/balance", authMiddleware, async (req, res) => {
   const userId = req.userId;
 
   try {
-    const user = await Account.findOne({
-      userId,
-    });
+    // Find the account by userId
+    const account = await Account.findOne({ userId });
+    if (!account) {
+      return res.status(404).json({ error: "Account not found" });
+    }
+
+    // Find the user by userId
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Return the balance and username
     return res.status(200).json({
-      balance: user.balance,
+      balance: account.balance,
+      username: user.firstName,
     });
   } catch (error) {
-    return res.status(500).json({
-      error: "Internal server error",
-    });
+    console.error("Error fetching balance:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

@@ -19,13 +19,13 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     minLength: 3,
-    maxLength: 20,
+    maxLength: 30,
   },
   password: {
     type: String,
     required: true,
     minLength: 8,
-    maxLength: 20,
+    maxLength: 30,
   },
   firstName: {
     type: String,
@@ -93,5 +93,5 @@ const Account = mongoose.model("Account", accountSchema);
 
 module.exports = {
   User,
-  Account
+  Account,
 };

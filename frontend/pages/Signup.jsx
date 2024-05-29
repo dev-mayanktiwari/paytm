@@ -6,6 +6,7 @@ import Heading from "../components/Heading";
 import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -14,6 +15,7 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   
   const handleSubmit = async () => {
     try {
@@ -27,6 +29,7 @@ const Signup = () => {
         }
       );
       localStorage.setItem("token", response.data.token);
+      navigate("/dashboard");
     } catch (error) {
       console.log(error); 
     }
