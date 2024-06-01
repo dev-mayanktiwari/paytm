@@ -14,7 +14,7 @@ const Signin = () => {
 
   const handleSignin = () => {
     axios
-      .post("http://localhost:3000/api/v1/user/signin", {
+      .post("api/v1/user/signin", {
         username: username,
         password: password,
       })

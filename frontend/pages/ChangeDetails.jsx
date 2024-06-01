@@ -30,7 +30,7 @@ function ChangeDetails() {
     console.log(payload);
     try {
       await axios
-        .put("http://localhost:3000/api/v1/user/updateDetails", payload, {
+        .put("api/v1/user/updateDetails", payload, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

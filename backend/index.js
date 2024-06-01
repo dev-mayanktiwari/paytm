@@ -4,7 +4,9 @@ const rootRouter = require("./routes/index.js");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://100.100.11.105:5173'
+}));
 app.use(express.json());
 app.use("/api/v1" , rootRouter);
 

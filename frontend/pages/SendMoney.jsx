@@ -12,7 +12,7 @@ const SendMoney = () => {
 
   const handlePayment = () => {
     axios.post(
-      "http://localhost:3000/api/v1/account/transfer",
+      "api/v1/account/transfer",
       {
         to: userId,
         amount: amount,
