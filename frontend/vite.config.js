@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "http://100.100.11.105:3000",
+        target: "paytm-backend-final.vercel.app",
       },
     },
   },
