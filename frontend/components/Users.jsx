@@ -25,7 +25,7 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get("api/v1/user/bulk?filter=" + debouncedVal, {
+      .get("/api/v1/user/bulk?filter=" + debouncedVal, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },

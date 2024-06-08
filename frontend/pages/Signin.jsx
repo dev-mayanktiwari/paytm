@@ -14,7 +14,7 @@ const Signin = () => {
 
   const handleSignin = () => {
     axios
-      .post("api/v1/user/signin", {
+      .post("/api/v1/user/signin", {
         username: username,
         password: password,
       })

@@ -9,7 +9,7 @@ const Dashboard = () => {
     const [balance, setBalance] = useState(0);
     const [user, setUser] = useState("");
     useEffect(() => {
-        axios.get("api/v1/account/balance", 
+        axios.get("/api/v1/account/balance", 
         {
             headers : {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
